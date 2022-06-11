@@ -8,6 +8,7 @@ image.get(
   '/:filename',
   asyncErrorHandler(async (req: Request, res: Response) => {
     const { filename } = req.params;
+
     const filePath = path.resolve(`${__dirname}/../images/${filename}`);
 
     return res.sendFile(filePath);
