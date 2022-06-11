@@ -41,3 +41,27 @@ article.get(
     return res.status(200).json(articles);
   })
 );
+
+article.put(
+  '/',
+  imageUpload.single('image'),
+  asyncErrorHandler(async (req: Request, res: Response) => {
+    let articleDTO: Article = req.body;
+    articleDTO.id = parseInt(articleDTO.id as unknown as string);
+    articleDTO.image = req.file?.filename!;
+    articleDTO.published = req.body.published === 'true';
+
+    const updatedArticle = await ArticleServiceInstance.update(articleDTO);
+
+    return res.status(200).json(updatedArticle);
+  })
+);
+
+article.delete(
+  '/',
+  asyncErrorHandler(async (req: Request, res: Response) => {
+    await ArticleServiceInstance.deleteById(req.body.id);
+
+    return res.status(204);
+  })
+);
