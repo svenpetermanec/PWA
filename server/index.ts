@@ -1,9 +1,12 @@
 import express from 'express';
 import { errorHandler } from './middleware/errorHandler';
+import { article } from './routes/article.route';
 
 const app = express();
 
 app.use(express.json());
+
+app.use('/article', article);
 
 app.use(errorHandler);
 
