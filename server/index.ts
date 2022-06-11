@@ -1,12 +1,14 @@
 import express from 'express';
 import { errorHandler } from './middleware/errorHandler';
 import { article } from './routes/article.route';
+import { user } from './routes/user.route';
 
 const app = express();
 
 app.use(express.json());
 
 app.use('/article', article);
+app.use('/user', user);
 
 app.use(errorHandler);
 
