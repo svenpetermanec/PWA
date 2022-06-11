@@ -20,3 +20,9 @@ model Article {
   category    String
   published   Boolean @default(true)
 }
+
+model User {
+  id       Int    @id @default(autoincrement())
+  username String
+  password String
+}
