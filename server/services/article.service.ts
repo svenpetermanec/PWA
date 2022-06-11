@@ -17,6 +17,14 @@ export class ArticleService {
     return articles;
   }
 
+  async getAllByCategory(category: string) {
+    const articles = await prisma.article.findMany({
+      where: { category: { equals: category } },
+    });
+
+    return articles;
+  }
+
   async update(articleDTO: Article) {
     const updatedArticle = await prisma.article.update({
       where: { id: articleDTO.id },

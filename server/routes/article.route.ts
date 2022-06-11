@@ -42,6 +42,17 @@ article.get(
   })
 );
 
+article.get(
+  '/:category',
+  asyncErrorHandler(async (req: Request, res: Response) => {
+    const articles = await ArticleServiceInstance.getAllByCategory(
+      req.params.category
+    );
+
+    return res.status(200).json(articles);
+  })
+);
+
 article.put(
   '/',
   imageUpload.single('image'),
