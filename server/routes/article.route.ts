@@ -36,18 +36,9 @@ article.post(
 article.get(
   '/',
   asyncErrorHandler(async (req: Request, res: Response) => {
-    const articles = await ArticleServiceInstance.getAll();
+    const { category } = req.body;
 
-    return res.status(200).json(articles);
-  })
-);
-
-article.get(
-  '/:category',
-  asyncErrorHandler(async (req: Request, res: Response) => {
-    const articles = await ArticleServiceInstance.getAllByCategory(
-      req.params.category
-    );
+    const articles = await ArticleServiceInstance.getAll(category);
 
     return res.status(200).json(articles);
   })

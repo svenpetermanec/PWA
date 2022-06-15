@@ -9,10 +9,17 @@ export class ArticleService {
     return article;
   }
 
-  async getAll() {
-    const articles = await prisma.article.findMany({
-      where: { published: { equals: true } },
-    });
+  async getAll(category: string) {
+    let articles: Article[];
+    if (category) {
+      articles = await prisma.article.findMany({
+        where: { published: { equals: true }, category: { equals: category } },
+      });
+    } else {
+      articles = await prisma.article.findMany({
+        where: { published: { equals: true } },
+      });
+    }
 
     return articles;
   }
