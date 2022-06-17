@@ -3,35 +3,24 @@ import {
   Box,
   Flex,
   HStack,
-  Link,
   IconButton,
   useDisclosure,
   useColorModeValue,
   Stack,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import { Link } from 'react-router-dom';
 
 const Links = [
-  { title: 'POČETNA', link: '' },
-  { title: 'SPORT', link: '' },
-  { title: 'KATEGORIJA' },
-  { title: 'KATEGORIJA2' },
-  { title: 'ADMINISTRACIJA' },
+  { title: 'POČETNA', link: '/' },
+  { title: 'SPORT', link: '/category/sport' },
+  { title: 'MARKET', link: '/category/market' },
+  { title: 'UNOS', link: '/new' },
+  { title: 'ADMINISTRACIJA', link: '/admin' },
 ];
 
-const NavLink = ({ children }: { children: ReactNode }) => (
-  <Link
-    px={2}
-    py={1}
-    rounded={'md'}
-    _hover={{
-      textDecoration: 'none',
-      bg: useColorModeValue('white', 'white'),
-    }}
-    href={'#'}
-  >
-    {children}
-  </Link>
+const NavLink = ({ children, link }: { children: ReactNode; link: string }) => (
+  <Link to={link}>{children}</Link>
 );
 
 export const Header = () => {
@@ -62,8 +51,10 @@ export const Header = () => {
               spacing={4}
               display={{ base: 'none', md: 'flex' }}
             >
-              {Links.map(({ title }) => (
-                <NavLink key={title}>{title}</NavLink>
+              {Links.map(({ title, link }) => (
+                <NavLink key={title} link={link}>
+                  {title}
+                </NavLink>
               ))}
             </HStack>
           </HStack>
@@ -72,8 +63,10 @@ export const Header = () => {
         {isOpen && (
           <Box pb={4} display={{ md: 'none' }}>
             <Stack as={'nav'} spacing={4}>
-              {Links.map(({ title }) => (
-                <NavLink key={title}>{title}</NavLink>
+              {Links.map(({ title, link }) => (
+                <NavLink key={title} link={link}>
+                  {title}
+                </NavLink>
               ))}
             </Stack>
           </Box>

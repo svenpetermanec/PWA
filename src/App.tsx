@@ -7,6 +7,9 @@ export const App = () => {
     <Routes>
       <Route path='/' element={<HomeContainer />} />
       <Route path='/article/:id' element={<ArticleFull />} />
+      <Route path='/category/:category' element={<div>kategorija</div>} />
+      <Route path='/new' element={<div>forma</div>} />
+      <Route path='/admin' element={<div>admin</div>} />
       <Route path={'*'} element={<Navigate to={'/'} />} />
     </Routes>
   );
