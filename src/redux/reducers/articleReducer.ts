@@ -21,7 +21,7 @@ const articleSlice = createSlice({
       );
     });
     builder.addCase(getArticlesThunk.rejected, (state, action) => {
-      console.log(action);
+      console.error(action);
     });
   },
 });

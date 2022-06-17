@@ -4,7 +4,7 @@ import { AppDispatch, RootState } from '../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { getArticlesThunk } from '../redux/actions/articlesAction';
 import { Article } from '../redux/models/articleModel';
-import { SingleArticle } from '../components/article/SingleArticle';
+import { HomepageArticle } from '../components/article/HomepageArticle';
 import { articlesByCategory } from '../redux/selectors/articleSelector';
 
 export const ArticlesContainer = () => {
@@ -30,7 +30,7 @@ export const ArticlesContainer = () => {
         <Divider orientation='horizontal' mb={2} />
         <Flex justifyContent='space-between'>
           {sportArticles?.slice(0, 3).map((article: Article) => (
-            <SingleArticle key={article.id} article={article} />
+            <HomepageArticle key={article.id} article={article} />
           ))}
         </Flex>
 
@@ -38,7 +38,7 @@ export const ArticlesContainer = () => {
         <Divider orientation='horizontal' mb={2} />
         <Flex justifyContent='space-between'>
           {marketArticles?.slice(0, 3).map((article: Article) => (
-            <SingleArticle key={article.id} article={article} />
+            <HomepageArticle key={article.id} article={article} />
           ))}
         </Flex>
       </Box>

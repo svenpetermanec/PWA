@@ -1,21 +1,16 @@
-import { Image, Text, VStack } from '@chakra-ui/react';
+import { Box, Image, Text, VStack } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Article } from '../../redux/models/articleModel';
+import { Footer } from '../Footer';
+import { Header } from '../Header';
 
-interface Props {
-  article: Article;
-}
-
-export const SingleArticle = ({ article }: Props) => {
+export const SingleArticle = ({ article }: { article: Article }) => {
   const [image, setImage] = useState<string>();
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchImage = async () => {
       const response = await fetch(
-        `http://localhost:4200/image/${article.image}`
+        `http://localhost:4200/image/${article!.image}`
       );
       const imageBlob = await response.blob();
       const imageObjectURL = URL.createObjectURL(imageBlob);
@@ -27,15 +22,15 @@ export const SingleArticle = ({ article }: Props) => {
   }, []);
 
   return (
-    <VStack
-      bg='white'
-      boxShadow='0px 1px gray'
-      onClick={() => navigate(`/article/${article.id}`)}
-    >
-      <Image src={image} draggable={false} maxH={280} />
-      <Text textAlign='center' fontWeight='bold'>
-        {article.title}
-      </Text>
-    </VStack>
+    <Box h='88vh' bg='gray.200' w='90vw' p={5}>
+      <VStack>
+        <Text fontWeight='bold' fontSize='25'>
+          {article?.title}
+        </Text>
+        <Image src={image} draggable={false} />
+        <Text>{article?.description}</Text>
+        <Text>{article?.content}</Text>
+      </VStack>
+    </Box>
   );
 };
