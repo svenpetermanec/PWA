@@ -3,13 +3,11 @@ import { getArticlesThunk } from '../actions/articlesAction';
 import { Article } from '../models/articleModel';
 
 interface ArticlesState {
-  sportArticles: Article[];
-  marketArticles: Article[];
+  articles: Article[];
 }
 
 const initialState: ArticlesState = {
-  sportArticles: [],
-  marketArticles: [],
+  articles: [],
 };
 
 const articleSlice = createSlice({
@@ -18,8 +16,9 @@ const articleSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getArticlesThunk.fulfilled, (state, action) => {
-      state[`${action.payload[0].category}Articles` as keyof ArticlesState] =
-        action.payload;
+      action.payload.forEach((article: Article) =>
+        state.articles.push(article)
+      );
     });
     builder.addCase(getArticlesThunk.rejected, (state, action) => {
       console.log(action);

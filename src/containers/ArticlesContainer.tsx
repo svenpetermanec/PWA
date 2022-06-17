@@ -5,16 +5,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getArticlesThunk } from '../redux/actions/articlesAction';
 import { Article } from '../redux/models/articleModel';
 import { SingleArticle } from '../components/article/SingleArticle';
+import { articlesByCategory } from '../redux/selectors/articleSelector';
 
 export const ArticlesContainer = () => {
   const dispatch: AppDispatch = useDispatch();
 
-  const sportArticles: Article[] = useSelector(
-    (state: RootState) => state.article.sportArticles
+  const sportArticles: Article[] | undefined = useSelector(
+    articlesByCategory('sport')
   );
 
-  const marketArticles: Article[] = useSelector(
-    (state: RootState) => state.article.marketArticles
+  const marketArticles: Article[] | undefined = useSelector(
+    articlesByCategory('market')
   );
 
   useEffect(() => {
@@ -28,7 +29,7 @@ export const ArticlesContainer = () => {
         <Heading>Sport</Heading>
         <Divider orientation='horizontal' mb={2} />
         <Flex justifyContent='space-between'>
-          {sportArticles.slice(0, 3).map((article: Article) => (
+          {sportArticles?.slice(0, 3).map((article: Article) => (
             <SingleArticle key={article.id} article={article} />
           ))}
         </Flex>
@@ -36,7 +37,7 @@ export const ArticlesContainer = () => {
         <Heading mt={8}>Market</Heading>
         <Divider orientation='horizontal' mb={2} />
         <Flex justifyContent='space-between'>
-          {marketArticles.slice(0, 3).map((article: Article) => (
+          {marketArticles?.slice(0, 3).map((article: Article) => (
             <SingleArticle key={article.id} article={article} />
           ))}
         </Flex>
