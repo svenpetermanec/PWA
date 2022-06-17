@@ -1,7 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
+import articleReducer from './reducers/articleReducer';
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    article: articleReducer,
+  },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
