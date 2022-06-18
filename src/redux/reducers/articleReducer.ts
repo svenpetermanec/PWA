@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getArticlesThunk } from '../actions/articlesAction';
+import { toast } from 'react-toastify';
+import { addArticleThunk, getArticlesThunk } from '../actions/articlesAction';
 import { Article } from '../models/articleModel';
 
 interface ArticlesState {
@@ -22,6 +23,10 @@ const articleSlice = createSlice({
     });
     builder.addCase(getArticlesThunk.rejected, (state, action) => {
       console.error(action);
+    });
+    builder.addCase(addArticleThunk.fulfilled, (state, action) => {
+      state.articles.push(action.payload);
+      toast.success('Članak objavljen');
     });
   },
 });

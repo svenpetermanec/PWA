@@ -1,23 +1,19 @@
-import { Box, Center, VStack } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { Box, VStack } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Article } from '../redux/models/articleModel';
 import { articlesByCategory } from '../redux/selectors/articleSelector';
-import { SingleArticle } from './article/SingleArticle';
-import { Footer } from './Footer';
-import { Header } from './Header';
+import { SingleArticle } from '../components/article/SingleArticle';
+import { Footer } from '../components/Footer';
+import { Header } from '../components/Header';
 
-export const CategoryPage = () => {
+export const CategoryContainer = () => {
   const { category } = useParams();
 
   const categoryArticles: Article[] | undefined = useSelector(
     articlesByCategory(category!)
   );
-
-  useEffect(() => {}, [category]);
-
-  console.log(categoryArticles);
 
   return (
     <Box key={category}>
