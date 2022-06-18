@@ -18,8 +18,13 @@ import { Article } from '../redux/models/articleModel';
 import { zodResolver } from '@hookform/resolvers/zod';
 import z from 'zod';
 import { AppDispatch } from '../redux/store';
-import { useDispatch } from 'react-redux';
-import { addArticleThunk } from '../redux/actions/articlesAction';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addArticleThunk,
+  updateArticleThunk,
+} from '../redux/actions/articlesAction';
+import { useParams } from 'react-router-dom';
+import { articleById } from '../redux/selectors/articleSelector';
 
 const articleSchema = z.object({
   title: z
@@ -35,14 +40,23 @@ const articleSchema = z.object({
   category: z.string().min(1, { message: 'Kategorija je obavezna' }),
 });
 
-export const NewArticleContainer = () => {
+export const NewArticleContainer = ({ adminView }: { adminView?: boolean }) => {
   const dispatch: AppDispatch = useDispatch();
+
+  let article;
+
+  if (adminView) {
+    const { id } = useParams();
+    article = useSelector(articleById(Number(id)));
+  }
 
   const {
     formState: { errors },
     register,
     handleSubmit,
-  } = useForm({ resolver: zodResolver(articleSchema) });
+  } = useForm({
+    resolver: zodResolver(articleSchema),
+  });
 
   const onSubmit = (article: any) => {
     //ignore this pls :)
@@ -54,7 +68,11 @@ export const NewArticleContainer = () => {
     form.append('category', article.category);
     form.append('published', article.published);
 
-    dispatch(addArticleThunk(form));
+    if (adminView) {
+      dispatch(updateArticleThunk(form));
+    } else {
+      dispatch(addArticleThunk(form));
+    }
   };
 
   return (
@@ -62,37 +80,49 @@ export const NewArticleContainer = () => {
       <Header />
       <Stack h='88vh' p={5}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <FormControl isInvalid={errors.title} my={2}>
-            <Input type='text' placeholder='Naslov' {...register('title')} />
+          <FormControl isInvalid={errors.title as any} my={2}>
+            <Input
+              type='text'
+              placeholder='Naslov'
+              defaultValue={article?.title}
+              {...register('title')}
+            />
             <FormErrorMessage>{errors.title?.message}</FormErrorMessage>
           </FormControl>
 
-          <FormControl isInvalid={errors.description} my={2}>
+          <FormControl isInvalid={errors.description as any} my={2}>
             <Textarea
               placeholder='Kratki sadržaj'
+              defaultValue={article?.description}
               {...register('description')}
             />
             <FormErrorMessage>{errors.description?.message}</FormErrorMessage>
           </FormControl>
 
-          <FormControl isInvalid={errors.content} my={2}>
-            <Textarea placeholder='Sadržaj' {...register('content')} />
+          <FormControl isInvalid={errors.content as any} my={2}>
+            <Textarea
+              placeholder='Sadržaj'
+              defaultValue={article?.content}
+              {...register('content')}
+            />
             <FormErrorMessage>{errors.content?.message}</FormErrorMessage>
           </FormControl>
 
-          <FormControl isInvalid={errors.image} my={2}>
+          <FormControl isInvalid={errors.image as any} my={2}>
             <FileUpload register={register('image')}>
               <Button colorScheme='gray' borderRadius={50}>
                 <Text color='red.500'>Odaberi sliku</Text>
               </Button>
             </FileUpload>
-            <FormErrorMessage>
-              {errors.image?.FileList.message}
-            </FormErrorMessage>
+            <FormErrorMessage>{errors.image?.message}</FormErrorMessage>
           </FormControl>
 
-          <FormControl isInvalid={errors.category} my={2}>
-            <Select placeholder='Kategorija' {...register('category')}>
+          <FormControl isInvalid={errors.category as any} my={2}>
+            <Select
+              placeholder='Kategorija'
+              defaultValue={article?.category}
+              {...register('category')}
+            >
               <option value='sport'>Sport</option>
               <option value='market'>Market</option>
             </Select>
@@ -100,7 +130,11 @@ export const NewArticleContainer = () => {
           </FormControl>
 
           <Flex justifyContent='space-between'>
-            <Checkbox colorScheme='green' {...register('published')}>
+            <Checkbox
+              colorScheme='green'
+              defaultChecked={article?.published}
+              {...register('published')}
+            >
               Javno
             </Checkbox>
 

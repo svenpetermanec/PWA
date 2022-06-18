@@ -11,3 +11,11 @@ export interface Article {
 export interface GetArticlesRequest {
   category: string;
 }
+
+export interface DeleteArticleRequest {
+  id: number;
+}
+
+export interface DeleteArticleResponse {
+  message: string;
+}

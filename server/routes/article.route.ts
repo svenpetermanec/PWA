@@ -64,6 +64,6 @@ article.delete(
   asyncErrorHandler(async (req: Request, res: Response) => {
     await ArticleServiceInstance.deleteById(req.body.id);
 
-    return res.status(204);
+    return res.status(204).json({ message: 'Deleted' });
   })
 );

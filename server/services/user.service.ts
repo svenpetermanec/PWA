@@ -13,6 +13,7 @@ export class UserService {
       data: {
         username: userDTO.username,
         password: hashedPassword,
+        isAdmin: userDTO.isAdmin,
       },
     });
     return { username: user.username, isAdmin: user.isAdmin };

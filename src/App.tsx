@@ -26,6 +26,10 @@ export const App = () => {
         <Route path='/article/:id' element={<ArticleFull />} />
         <Route path='/category/:category' element={<CategoryContainer />} />
         <Route path='/new' element={<NewArticleContainer />} />
+        <Route
+          path='/new/:id'
+          element={<NewArticleContainer adminView={true} />}
+        />
         <Route path='/admin' element={<LoginContainer />} />
         <Route path='/admin/panel' element={<AdminContainer />} />
         <Route path='/register' element={<RegisterContainer />} />
