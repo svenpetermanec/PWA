@@ -23,12 +23,17 @@ export class UserService {
       where: { username: { equals: username } },
     });
 
-    if (!user) return { status: 404, message: "Account doesn't exist" };
+    if (!user)
+      return { status: 404, message: { message: "Account doesn't exist" } };
 
     const isMatch = await bcrypt.compare(password, user.password);
 
-    if (!isMatch) return { status: 401, message: 'Incorrect password' };
+    if (!isMatch)
+      return { status: 401, message: { message: 'Incorrect password' } };
 
-    return { status: 200, message: user };
+    return {
+      status: 200,
+      message: { id: user.id, username: user.username, isAdmin: user.isAdmin },
+    };
   }
 }

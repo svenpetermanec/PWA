@@ -28,6 +28,9 @@ const articleSlice = createSlice({
       state.articles.push(action.payload);
       toast.success('Članak objavljen');
     });
+    builder.addCase(addArticleThunk.rejected, () => {
+      toast.success('Došlo je do pogreške');
+    });
   },
 });
 

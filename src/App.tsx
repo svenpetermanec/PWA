@@ -5,6 +5,9 @@ import { CategoryContainer } from './containers/CategoryContainer';
 import { HomeContainer } from './containers/HomeContainer';
 import { NewArticleContainer } from './containers/NewArticleContainer';
 import 'react-toastify/dist/ReactToastify.css';
+import { LoginContainer } from './containers/LoginContainer';
+import { RegisterContainer } from './containers/RegisterContainer';
+import { AdminContainer } from './containers/AdminContainer';
 
 export const App = () => {
   return (
@@ -23,7 +26,9 @@ export const App = () => {
         <Route path='/article/:id' element={<ArticleFull />} />
         <Route path='/category/:category' element={<CategoryContainer />} />
         <Route path='/new' element={<NewArticleContainer />} />
-        <Route path='/admin' element={<div>admin</div>} />
+        <Route path='/admin' element={<LoginContainer />} />
+        <Route path='/admin/panel' element={<AdminContainer />} />
+        <Route path='/register' element={<RegisterContainer />} />
         <Route path={'*'} element={<Navigate to={'/'} />} />
       </Routes>
     </>
